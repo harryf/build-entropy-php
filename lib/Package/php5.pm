@@ -31,11 +31,10 @@ sub dependency_names {
 	#t1lib
 	#frontbase 
 	#openbase
-	#pdflib
 	#tidy 
 	#ming
 	#mysql (replaced by mysqlnd)
-	return qw(iconv pdflib_commercial mssql memcache imapcclient libxml2 libxslt gettext curl libpng libjpeg libfreetype  postgresql mcrypt);
+	return qw(iconv mssql memcache imapcclient libxml2 libxslt gettext curl libpng libjpeg libfreetype  postgresql mcrypt);
 }
 
 sub subpath_for_check {
@@ -80,12 +79,11 @@ sub configure_flags {
 		'--enable-sysvsem',
 		'--enable-sysvshm',
 		'--enable-sysvmsg',
- 		'--enable-memory-limit',
- 		'--enable-mbstring',
- 		'--enable-bcmath',
- 		'--enable-calendar',
- 		'--with-iodbc',
- 		'--with-mhash',
+		'--enable-mbstring',
+		'--enable-bcmath',
+		'--enable-calendar',
+		'--with-iodbc',
+		'--with-mhash',
 		'--with-mysql=mysqlnd',
 		'--with-mysqli=mysqlnd',
 		'--with-pdo-mysql=mysqlnd',
@@ -112,8 +110,6 @@ sub configure_flags {
 }
 
 #http://www.frontbase.com/download/Download_4.2.4/MacOSX-10.4u/FrontBase-MacOSX-4.2.4.dmg
-
-#         --with-pdflib=$(INSTDIR) \
 
 #         --with-fbsql=$(FRONTBASE_INSTDIR)/Library/FrontBase \
 #         --enable-openbase_module

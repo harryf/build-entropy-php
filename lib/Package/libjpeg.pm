@@ -5,7 +5,7 @@ use warnings;
 
 use base qw(Package);
 
-our $VERSION = '6b';
+our $VERSION = '7';
 
 
 
@@ -23,7 +23,7 @@ sub filename {
 	return "jpegsrc.v$VERSION.tar.gz";
 }
 
-#http://www.ijg.org/files/jpegsrc.v6b.tar.gz
+#http://www.ijg.org/files/jpegsrc.v7.tar.gz
 
 
 # sub build {
