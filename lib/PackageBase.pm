@@ -429,7 +429,7 @@ sub php_build_pre {
 
 
 sub supported_archs {
-	return qw(i386 x86_64 ppc7400 ppc64);
+	return qw(i386 x86_64);
 }
 
 
@@ -463,7 +463,7 @@ sub php_build_arch_pre {
 
 
 sub all_archs {
-	return qw(i386 x86_64 ppc7400 ppc64);
+	return qw(i386 x86_64);
 }
 
 

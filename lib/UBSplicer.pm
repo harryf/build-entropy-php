@@ -8,7 +8,7 @@ use base qw(Obj);
 
 our $VERSION = '1.0';
 
-our @KNOWN_ARCHS = qw(i386 x86_64 ppc7400 ppc64);
+our @KNOWN_ARCHS = qw(i386 x86_64);
 our $MASTER_ARCH = $KNOWN_ARCHS[0];
 
 our @EXECUTABLE_REGEXES = (

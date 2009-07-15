@@ -43,7 +43,7 @@ sub php_extension_configure_flags {
 }
 
 
-#CFLAGS='-arch i386 -arch x86_64 -arch ppc7400 -arch ppc64' LDFLAGS='-arch i386 -arch x86_64 -arch ppc7400 -arch ppc64' CC='cc -DENTROPY_CH_RELEASE=2' ./configure --with-libiconv-prefix=/usr/local/php5 --without-emacs --disable-java --disable-native-java --disable-dependency-tracking --prefix=/usr/local/php5
+#CFLAGS='-arch i386 -arch x86_64' LDFLAGS='-arch i386 -arch x86_64' CC='cc -DENTROPY_CH_RELEASE=2' ./configure --with-libiconv-prefix=/usr/local/php5 --without-emacs --disable-java --disable-native-java --disable-dependency-tracking --prefix=/usr/local/php5
 
 sub configure_flags {
 	my $self = shift @_;

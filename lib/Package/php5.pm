@@ -12,7 +12,6 @@ use base qw(Package);
 # rework this so it runs normally and a third time for the cli version.
 # add the new cli/cgi (?) as php-cli or php-cgi
 # enable --enable-pcntl and fastcgi for the cgi version
-# switch to pdflib 7
 
 sub base_url {
 #	return "http://us2.php.net/distributions";
@@ -287,7 +286,7 @@ sub create_distimage {
 sub patchfiles {
 	my $self = shift @_;
 #	return qw(php-entropy.patch);
-	return qw(php-entropy.patch php-entropy-imap.patch php-mysqlnd-ppc64.patch);
+	return qw(php-entropy.patch php-entropy-imap.patch);
 }
 
 

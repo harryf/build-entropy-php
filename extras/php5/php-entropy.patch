@@ -1,7 +1,7 @@
 diff -ru php-5.2.4/ext/standard/info.c php-5.2.4.entropy/ext/standard/info.c
 --- php-5.2.4/ext/standard/info.c	2007-07-21 03:24:26.000000000 +0200
 +++ php-5.2.4.entropy/ext/standard/info.c	2007-11-02 00:39:21.000000000 +0100
-@@ -454,6 +454,23 @@
+@@ -454,6 +454,15 @@
  
  		if (!sapi_module.phpinfo_as_text) {
  			php_printf("<h1 class=\"p\">PHP Version %s</h1>\n", PHP_VERSION);
@@ -11,14 +11,6 @@ diff -ru php-5.2.4/ext/standard/info.c php-5.2.4.entropy/ext/standard/info.c
 +
 +#ifdef __x86_64__
 +#define ENTROPY_CH_THIS_ARCH "x86_64"
-+#endif
-+
-+#ifdef __ppc__
-+#define ENTROPY_CH_THIS_ARCH "ppc"
-+#endif
-+
-+#ifdef __ppc64__
-+#define ENTROPY_CH_THIS_ARCH "ppc64"
 +#endif
 +			php_printf("<h2 class=\"p\"><a style=\"text-decoration: none; background-color:inherit;\" href='http://www.entropy.ch/software/macosx/php/?phpinfo-version=%s-%d'>www.entropy.ch</a> Release %d</h2>\n", PHP_VERSION, ENTROPY_CH_RELEASE, ENTROPY_CH_RELEASE);
 +			php_printf("<p>Universal Binary %s - this machine runs: %s</p>\n", ENTROPY_CH_ARCHS, ENTROPY_CH_THIS_ARCH);

@@ -27,7 +27,7 @@ sub subpath_for_check {
 }
 
 
-#CFLAGS='-arch i386 -arch x86_64 -arch ppc7400 -arch ppc64' LDFLAGS='-arch i386 -arch x86_64 -arch ppc7400 -arch ppc64' CC='cc -DENTROPY_CH_RELEASE=2' ./configure --disable-dependency-tracking --prefix=/usr/local/php5 --enable-ldaps
+#CFLAGS='-arch i386 -arch x86_64' LDFLAGS='-arch i386 -arch x86_64' CC='cc -DENTROPY_CH_RELEASE=2' ./configure --disable-dependency-tracking --prefix=/usr/local/php5 --enable-ldaps
 
 sub configure_flags {
 	my $self = shift @_;

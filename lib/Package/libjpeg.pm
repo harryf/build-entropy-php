@@ -32,7 +32,7 @@ sub filename {
 # 	return undef unless ($self->SUPER::build(@_));
 # 	my $prefix = $self->config()->prefix();
 # 	$self->cd_packagesrcdir();
-# 	$self->shell(qq!CFLAGS="-arch ppc -arch i386" ./configure ! . $self->configure_flags());
+# 	$self->shell(qq!CFLAGS="-arch i386" ./configure ! . $self->configure_flags());
 # 	$self->shell($self->make_command());
 # 	
 # }

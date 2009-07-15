@@ -23,7 +23,6 @@ my $config = Config->new(
 	basedir              => $basedir,
 	prefix               => '/usr/local/php5',
 	orahome              => "$basedir/install",
-	pdflib_lite          => 1,
 	mysql_install_prefix => undef,
 	variants             => {
 		apache1          => {
@@ -43,25 +42,9 @@ my $config = Config->new(
 # my $php5 = Package::php5->new(config => $config, variant => 'apache2');
 # $php5->create_distimage();
 
-#use Package::pdflib_commercial;
-#my $pdflib = Package::pdflib_commercial->new(config => $config, variant => 'apache2');
-#$pdflib->prepackage_hook($config->prefix());
-
 my $php = Package::php5->new(config => $config, variant => 'apache2');
 $php->create_distimage();
 # $php->install();
-
-
-
-# use Package::pdflib;
-# my $p = Package::pdflib->new(config => $config, variant => 'apache2');
-# $p->install();
-
-
-# use Package::pdflib_commercial;
-# my $p = Package::pdflib_commercial->new(config => $config, variant => 'apache2');
-# $p->download();
-
 
 # use Package::mssql;
 # my $p = Package::mssql->new(config => $config, variant => 'apache2');
