@@ -26,7 +26,6 @@ sub packagename {
 
 
 sub dependency_names {
-	#oracleinstantclient
 	#iodbc
 	#t1lib
 	#frontbase 
