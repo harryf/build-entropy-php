@@ -39,9 +39,6 @@ my $config = Config->new(
 	debug                => 1,
 );
 
-# my $php5 = Package::php5->new(config => $config, variant => 'apache2');
-# $php5->create_distimage();
-
 my $php = Package::php5->new(config => $config, variant => 'apache2');
 $php->create_distimage();
 # $php->install();
