@@ -340,7 +340,7 @@ sub make_install_override_list {
 
 sub configure_flags {
 	my $self = shift @_;
-	return "--prefix=" . $self->install_prefix();
+	return "--disable-dependency-tracking --prefix=" . $self->install_prefix();
 }
 
 
@@ -383,7 +383,7 @@ sub cflags {
 	my $self = shift @_;
 	my $debugflag = $self->config()->debug() ? '-g ' : '';
 	my $prefix = $self->config()->prefix();
-	return "$debugflag -I$prefix/include " . $self->compiler_archflags();
+	return "$debugflag -mmacosx-version-min=10.5 -O -I$prefix/include " . $self->compiler_archflags();
 }
 
 
