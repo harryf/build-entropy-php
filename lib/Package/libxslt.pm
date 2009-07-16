@@ -33,7 +33,7 @@ sub subpath_for_check {
 
 sub configure_flags {
 	my $self = shift @_;
-	return $self->SUPER::configure_flags() . " --without-python --with-libxml-prefix=" . $self->install_prefix();
+	return $self->SUPER::configure_flags() . " --disable-dependency-tracking --without-python --with-libxml-prefix=" . $self->install_prefix();
 
 }
 

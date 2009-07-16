@@ -31,8 +31,10 @@ sub php_extension_configure_flags {
 	return "--with-mcrypt=shared," . $self->config()->prefix();
 }
 
-
-
+sub configure_flags {
+	my $self = shift @_;
+	return $self->SUPER::configure_flags(@_) . " --disable-dependency-tracking";
+}
 
 sub php_dso_extension_names {
 	my $self = shift @_;
