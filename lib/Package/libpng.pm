@@ -25,7 +25,7 @@ sub subpath_for_check {
 
 sub configure_flags {
 	my $self = shift @_;
-	return $self->SUPER::configure_flags(@_) . " --without-x";
+	return $self->SUPER::configure_flags(@_) . " --without-x --disable-dependency-tracking";
 }
 
 

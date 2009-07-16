@@ -33,7 +33,9 @@ sub configure_flags {
 	my $self = shift @_;
 	return join " ", (
 		$self->SUPER::configure_flags(@_),
-		'--enable-ldaps'
+		'--enable-ldaps',
+		'--disable-dependency-tracking',
+		'--with-ssl'
 	);
 }
 
