@@ -31,11 +31,6 @@ sub subpath_for_check {
 	return "lib/libjpeg.a";
 }
 
-sub configure_flags {
-	my $self = shift @_;
-	return $self->SUPER::configure_flags(@_) . " --disable-dependency-tracking";
-}
-
 sub install {
 
 	my $self = shift @_;

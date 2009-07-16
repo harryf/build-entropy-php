@@ -27,7 +27,7 @@ sub packagename {
 sub configure_flags {
 	my $self = shift @_;
 	my $prefix = $self->config()->prefix();
-	return $self->SUPER::configure_flags() . " --disable-dependency-tracking --without-python";
+	return $self->SUPER::configure_flags() . " --without-python";
 #	return $self->SUPER::configure_flags() . " --without-python --with-iconv=$prefix";
 }
 

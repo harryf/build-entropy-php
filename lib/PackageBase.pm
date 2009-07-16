@@ -340,7 +340,7 @@ sub make_install_override_list {
 
 sub configure_flags {
 	my $self = shift @_;
-	return "--prefix=" . $self->install_prefix();
+	return "--disable-dependency-tracking --prefix=" . $self->install_prefix();
 }
 
 
