@@ -22,6 +22,17 @@ sub subpath_for_check {
 	return "lib/libsybdb.dylib";
 }
 
+sub configure_flags {
+	my $self = shift @_;
+	return $self->SUPER::configure_flags(@_) . " --disable-rpath --enable-msdblib --with-tdsver=8.0";
+}
+
+sub build_postconfigure {
+    my $self = shift @_;
+    $self->shell('cp /usr/bin/glibtool libtool');
+    $self->shell('sed -i "" "#../replacements/libreplacements.la#d" src/server/Makefile.in src/ctlib/Makefile.in src/odbc/Makefile.in src/dblib/Makefile.in src/apps/Makefile.in');
+    $self->shell('sed -i "" "#../../replacements/libreplacements.la#d" src/apps/fisql/Makefile.in src/dblib/unittests/Makefile.in src/tds/unittests/Makefile.in');
+}
 
 sub php_extension_configure_flags {
 	my $self = shift @_;
