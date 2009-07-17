@@ -7,9 +7,7 @@ use File::Glob ':glob';
 
 our $VERSION = '1.0';
 
-
 sub init {
-
 	my $self = shift @_;
 	my (%args) = @_;
 
@@ -21,36 +19,27 @@ sub init {
 		die if ($@);
 		push @{$self->{dependencies}}, $class->new(config => $self->config());
 	}
-
 }
-
 
 sub base_url {
 	my ($self) = shift;
 	Carp::croak(sprintf("class %s must override method %s", ref($self) || $self, (caller(0))[3]));
 }
 
-
 sub packagename {
 	my ($self) = shift;
 	Carp::croak(sprintf("class %s must override method %s", ref($self) || $self, (caller(0))[3]));
 }
-
-
-
 
 sub filename {
 	my ($self) = shift;
 	return $self->packagename() . ".tar.gz";
 }
 
-
 sub packagesrcdir {
 	my $self = shift @_;
 	return $self->config()->srcdir() . "/" . $self->packagename(); 
 }
-
-
 
 sub url {
 	my $self = shift @_;
@@ -61,130 +50,6 @@ sub download_path {
 	my $self = shift @_;
 	return $self->config()->downloaddir() . "/" . $self->filename();
 }
-
-
-sub create_package {
-
-	my $self = shift @_;
-	return undef if ($self->is_packaged());
-
-	$_->create_package() foreach $self->dependencies();
-
-	my $prefix = $self->config()->prefix();
-
-	my $dir = "/tmp/build-entropy-php-pkg/" . $self->shortname();
-	$self->prepackage_hook($dir);
-
-	my @package_filelist = $self->package_filelist();
-	my @missing = grep {! -e $_} map {bsd_glob("$prefix/$_")} @package_filelist;
-	if (@missing) {
-		Carp::confess("$self: files in package list but missing on disk: @missing, filelist: @package_filelist");
-	}
-
-	my $list = join(' ', @package_filelist);
-
-	return undef unless ($list);
-
-	$self->log("packaging");
-	
-	$self->shell("mkdir -p '/tmp/build-entropy-php-pkgdst'");
-	
-	my $dst = "/tmp/build-entropy-php-pkgdst/" . $self->pkg_filename();
-
-	my @sed_cmds = $self->info_substitution_sed_cmds();
-
-	my $infofile = $self->package_infofile();
-	$self->shell({silent => 0}, "cat $infofile @sed_cmds > $infofile.out");
-	my $descfile = $self->package_descfile();
-	$self->shell({silent => 0}, "cat $descfile @sed_cmds > $descfile.out");
-	my $resdir = $self->package_resdir();
-
-	
-	$self->shell("mkdir -p $dir");
-	$self->shell("rm -rf $dir/*");
-
-	$self->cd($prefix);
-
-	my $excludes = join(' ', map {"--exclude $_"} $self->package_excludelist());
-	$self->shell("tar $excludes -cf - $list | (cd $dir && tar -xf -)");
-
-	$self->shell({silent => 0}, "/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker -build -ds -v -r '$resdir' -i '$infofile.out' -d '$descfile.out' -p '$dst' -f '$dir'");
-	
-
-}
-
-
-sub package_excludelist {
-	return ();
-}
-
-
-sub package_infofile {
-	my $self = shift @_;
-	return $self->config()->basedir() . '/extras/common/package/Info.plist';
-}
-
-sub package_descfile {
-	my $self = shift @_;
-	return $self->config()->basedir() . '/extras/common/package/Description.plist';
-}
-
-sub package_resdir {
-	my $self = shift @_;
-	return $self->config()->basedir() . '/extras/common/package/resources';
-}
-
-
-
-
-
-sub info_substitution_sed_cmds {
-
-	my $self = shift @_;
-
-	my %subs = (
-		version   => $self->config()->version(),
-		release   => $self->config()->release(),
-		prefix    => $self->config()->prefix(),
-		shortname => $self->shortname(),
-	);
-
-	return map {"| sed -e 's!{$_}!$subs{$_}!g'"} keys(%subs);
-
-}
-
-
-
-
-sub prepackage_hook {
-	my $self = shift @_;
-	my ($pkgroot) = @_;
-	return undef;
-}
-
-
-sub pkg_filename {
-	my $self = shift @_;
-	my $version = $self->config()->version() . '-' . $self->config()->release();
-	return "entropy-php-extension-" . $self->shortname() . ".pkg";
-}
-
-
-
-
-sub is_packaged {
-	my $self = shift @_;
-	return undef;
-}
-
-
-# return the list of file globs below the prefix
-# to be included in the installer package
-#
-sub package_filelist {
-	return ();
-}
-
 
 # subclasses should override and call this and do
 # nothing if this does not return true
@@ -204,7 +69,6 @@ sub is_built {
 	return undef;
 }
 
-
 # subclasses should override and call this and do
 # nothing if this does not return true
 #
@@ -218,7 +82,6 @@ sub install {
 	
 }
 
-
 sub is_installed {
 	my $self = shift @_;
 	my $subpath = $self->subpath_for_check();
@@ -227,28 +90,23 @@ sub is_installed {
 	return $exists;
 }
 
-
 sub subpath_for_check {
 	Carp::confess "subclasses must implement this method or provide a different is_installed() implementation"
 }
 
-
 sub dependency_names {
 	return ();
 }
-
 
 sub dependencies {
 	my $self = shift;
 	return @{$self->{dependencies}};
 }
 
-
 sub is_downloaded {
 	my $self = shift @_;
 	return -f $self->download_path()
 }
-
 
 sub download {
 	my $self = shift @_;
@@ -257,7 +115,6 @@ sub download {
 	$self->log("downloading $self from " . $self->url());
 	$self->shell('curl', '-o', $self->download_path(), $self->url());
 }
-
 
 sub unpack {
 	my $self = shift @_;
@@ -270,19 +127,16 @@ sub unpack {
 	$self->patch();
 }
 
-
 sub is_unpacked {
 	my $self = shift @_;
 #	$self->log("is unpacked: " . $self->packagesrcdir() . ": " . -d $self->packagesrcdir());
 	return -d $self->packagesrcdir();
 }
 
-
 sub extract {
 	my $self = shift @_;
 	$self->shell('tar -xzf', $self->download_path());
 }
-
 
 sub patch {
 	my $self = shift @_;
@@ -298,23 +152,19 @@ sub patch {
 	}
 }
 
-
 sub patchfiles {
 	return ();
 }
-
 
 sub cd_srcdir {
 	my $self = shift @_;
 	$self->cd($self->config()->srcdir());
 }
 
-
 sub cd_packagesrcdir {
 	my $self = shift @_;
 	$self->cd($self->packagesrcdir());
 }
-
 
 sub make_flags {
 	my $self = shift @_;
@@ -327,7 +177,6 @@ sub make_command {
 	return "MACOSX_DEPLOYMENT_TARGET=10.5 make " . $self->make_flags();
 }
 
-
 sub make_install_override_list {
 	my $self = shift @_;
 	my (%args) = @_;
@@ -335,19 +184,12 @@ sub make_install_override_list {
 	return "prefix=$args{prefix} exec_prefix=$args{prefix} bindir=$args{prefix}/bin sbindir=$args{prefix}/sbin sysconfdir=$args{prefix}/etc datadir=$args{prefix}/share includedir=$args{prefix}/include libdir=$args{prefix}/lib libexecdir=$args{prefix}/libexec localstatedir=$args{prefix}/var sharedstatedir=$args{prefix}/com mandir=$args{prefix}/man infodir=$args{prefix}/info EXTENSION_DIR=$args{prefix}/$extdir";
 }
 
-
-
-
 sub configure_flags {
 	my $self = shift @_;
 	return "--prefix=" . $self->install_prefix();
 }
 
-
-
-
 sub shortname {
-
 	my $self = shift @_;
 	my $class = ref($self) || $self;
 	my ($shortname) = $class =~ /::([^:]+)$/;
@@ -356,28 +198,22 @@ sub shortname {
 
 }
 
-
 sub to_string {
 	my $self = shift @_;
 	my $shortname = $self->shortname();
 	return "[package $shortname]";
 }
 
-
-
 sub extras_dir {
 	my $self = shift @_;
 	return $self->config()->basedir() . '/extras/' . $self->shortname();	
 }
-
-
 
 sub extras_path {
 	my $self = shift @_;
 	my ($filename) = @_;
 	return $self->extras_dir() . "/$filename";
 }
-
 
 sub cflags {
 	my $self = shift @_;
@@ -386,13 +222,11 @@ sub cflags {
 	return "$debugflag -mmacosx-version-min=10.5 -O -I$prefix/include " . $self->compiler_archflags();
 }
 
-
 sub ldflags {
 	my $self = shift @_;
 	my $prefix = $self->config()->prefix();
 	return "-L$prefix/lib " . $self->compiler_archflags();
 }
-
 
 sub cc {
 	my $self = shift @_;
@@ -404,12 +238,10 @@ sub cc {
 	return "cc";
 }
 
-
 sub compiler_archflags {
 	my $self = shift @_;
 	return join " ", map {"-arch $_"} $self->all_archs();
 }
-
 
 sub install_prefix {
 	my $self = shift @_;
@@ -418,7 +250,6 @@ sub install_prefix {
 
 # prefix for packages we don't want to bundle
 sub install_tmp_prefix {
-
 	my $self = shift @_;
 	return $self->config()->basedir() . "/install-tmp";
 	
@@ -427,11 +258,9 @@ sub install_tmp_prefix {
 sub php_build_pre {
 }
 
-
 sub supported_archs {
 	return qw(i386 x86_64);
 }
-
 
 sub supports_arch {
 	my $self = shift @_;
@@ -439,13 +268,9 @@ sub supports_arch {
 	return grep {$_ eq $arch} $self->supported_archs();
 }
 
-
-
 sub php_extension_configure_flags {
 	return "";
 }
-
-
 
 sub php_dso_extension_names {
 	return undef;
@@ -456,18 +281,11 @@ sub php_dso_extension_paths {
 	return map {$self->config()->extdir_path("$_.so")} $self->php_dso_extension_names();
 }
 
-
-
 sub php_build_arch_pre {
 }
-
 
 sub all_archs {
 	return qw(i386 x86_64);
 }
-
-
-
-
 
 1;

@@ -40,32 +40,7 @@ my $config = Config->new(
 );
 
 my $php = Package::php5->new(config => $config, variant => 'apache2');
-$php->create_distimage();
-# $php->install();
-
-# use Package::mssql;
-# my $p = Package::mssql->new(config => $config, variant => 'apache2');
-# $p->install();
-
-
-# use Package::ming;
-# my $p = Package::ming->new(config => $config, variant => 'apache2');
-# $p->install();
-
-
-# use Package::postgresql;
-# my $p = Package::postgresql->new(config => $config, variant => 'apache2');
-# $p->install();
-
-
-# use Package::imapcclient;
-# my $p = Package::imapcclient->new(config => $config, variant => 'apache2');
-# $p->install();
-
-
-# use Package::mysql;
-# my $p = Package::mysql->new(config => $config, variant => 'apache2');
-# $p->install();
+$php->install();
 
 
 # If there is a ~/.pear directory, "make install-pear" will not work properly

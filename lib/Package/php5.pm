@@ -120,9 +120,6 @@ sub build_postconfigure {
 	$self->shell("sed -i '' -e 's#\$echo#\$ECHO#g' libtool");
 }
 
-
-
-
 sub build_preconfigure {
 	my $self = shift @_;
 	my (%args) = @_;
@@ -142,72 +139,14 @@ sub build_preconfigure {
 
 }
 
-
-	
-
-
-
-
-
 sub dependency_extension_flags {
 	my $self = shift @_;
 	my (%args) = @_;
 
 	# fixme: figure out something for extensions with fewer archs
-#	return map {$_->php_extension_configure_flags()} grep {$_->supports_arch($args{arch})} $self->dependencies();
-
+	#return map {$_->php_extension_configure_flags()} grep {$_->supports_arch($args{arch})} $self->dependencies();
 	return map {$_->php_extension_configure_flags()} $self->dependencies();
 }
-
-
-
-
-
-# sub build_arch_pre {
-# 
-# 	my $self = shift @_;
-# 	my (%args) = @_;
-# 
-# 	# give extension modules a chance to tweak the contents of the ext directory
-# 	
-# 	foreach my $dependency ($self->dependencies()) {
-# 		$self->cd_packagesrcdir();
-# 		$self->cd('ext');
-# 		$dependency->php_build_arch_pre(%args, php_package => $self);
-# 	}
-# 	
-# 	$self->cd_packagesrcdir();
-# 	$self->shell("aclocal");
-# 	$self->shell("./buildconf --force");
-# 	$self->shell({fatal => 0}, "ranlib " . $self->install_prefix() . "/lib/*.a");
-# 	$self->shell({fatal => 0}, "ranlib " . $self->install_tmp_prefix() . "/lib/*.a");
-# 
-# }
-
-
-
-# sub make_install_arch {
-# 
-# 	my $self = shift @_;
-# 	my (%args) = @_;
-# 
-# 	my $install_override = $self->make_install_override_list(prefix => $args{prefix});
-# 
-# 	$self->shell($self->make_command() . " $install_override install-$_") foreach qw(cli build headers programs modules);
-# 
-# #	$self->shell($self->make_command() . " $install_override install-$_") foreach qw(cgi build headers programs modules);
-# #	$self->shell("mv $args{prefix}/bin/php $args{prefix}/bin/php-cgi");
-# 
-# #	$self->shell($self->make_command() . " $install_override install-$_") foreach qw(cli);
-# 	$self->shell("cp libs/libphp5.so $args{prefix}");
-# 
-# 	$self->shell("rm $args{prefix}/lib/php/extensions/*/*.a");
-# 
-# }
-# 
-# 
-
-
 
 sub install {
 
@@ -253,8 +192,6 @@ sub install {
 
 }
 
-
-
 sub create_dso_ini_files {
 	my $self = shift @_;
 
@@ -265,33 +202,11 @@ sub create_dso_ini_files {
 	$self->shell({silent => 0}, qq!echo 'extension_dir=$prefix/$extdir' > $prefix/php.d/10-extension_dir.ini!);
 }
 
-
-
-
-sub create_distimage {
-	my $self = shift @_;
-	$self->install();
-	$self->create_package();
-}
-
-
 sub patchfiles {
 	my $self = shift @_;
 #	return qw(php-entropy.patch);
 	return qw(php-entropy.patch php-entropy-imap.patch);
 }
-
-
-# sub unpack {
-#   my $self = shift @_;
-#   $self->SUPER::unpack();
-#   $self->cd_packagesrcdir();
-#   $self->cd("ext");
-#   my $mingtarball = $self->extras_path('ming.tar.gz');
-#   $self->shell("tar -xzf $mingtarball");
-# }
-
-
 
 sub cflags {
 	my $self = shift @_;
@@ -300,13 +215,6 @@ sub cflags {
 	return $self->SUPER::cflags(@_) . qq( -DENTROPY_CH_ARCHS='\\"$supported_archs\\"' -DENTROPY_CH_RELEASE=) . $self->config()->release();
 #-I$prefix/include
 }
-
-
-# sub ldflags {
-# 	my $self = shift @_;
-# 	return $self->SUPER::ldflags(@_) . " -Wl,-bind_at_load";
-# }
-
 
 sub cc {
 	my $self = shift @_;
@@ -317,99 +225,5 @@ sub cc {
 	#   i.e. ours and not the system-supplied libxml
 	return $self->SUPER::cc(@_) . " -L$prefix/lib -I$prefix/include -I$prefix/include/libxml2 -DENTROPY_CH_RELEASE=" . $self->config()->release();
 }
-
-
-sub package_filelist {
-	my $self = shift @_;
-
-	return qw(
-		entropy-php.conf
-		libphp5.so
-		etc/pear.conf.default
-		lib/libxml2*.dylib lib/libpng*.dylib lib/libfreetype*.dylib
-		lib/libiconv*.dylib
-		bin/php* bin/pear bin/pecl bin/peardev bin/activate-*
-		lib/php
-		lib/build
-		lib/php.ini-recommended
-		include/php
-		php.d/10-extension_dir.ini
-	);
-	
-	# lib/libt1*.dylib
-}
-
-sub package_excludelist {
-	return qw(lib/php/extensions);
-}
-
-
-sub create_package {
-	my $self = shift @_;
-	$self->SUPER::create_package(@_);
-	$self->create_metapackage();
-}
-
-
-
-sub create_metapackage {
-	my $self = shift @_;
-	$self->log("metapackaging");
-	my $version = $self->config()->version() . '-' . $self->config()->release();
-	my $pmdoc = $self->extras_path('distribution-package/entropy-php.pmdoc');
-	my $resources = $self->extras_path('distribution-package/resources');
-	$self->shell(qq!rm -f '/tmp/Entropy PHP '*.pkg!);
-	$self->shell({silent => 0}, "/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker -v --doc $pmdoc --out '/tmp/Entropy PHP $version.pkg' --version $version --title 'Entropy PHP $version'");
-	$self->shell('open /tmp/');
-}
-
-
-sub package_infofile {
-	my $self = shift @_;
-	return $self->extras_path('/package/Info.plist');
-}
-
-sub package_descfile {
-	my $self = shift @_;
-	return $self->extras_path('/package/Description.plist');
-}
-
-sub package_resdir {
-	my $self = shift @_;
-	return $self->extras_path('/package/resources');
-}
-
-
-
-sub prepackage_hook {
-	my $self = shift @_;
-	my ($pkgroot) = @_;
-
-	my $extdir = $self->config()->extdir();
-	$self->shell("mkdir -p $pkgroot/$extdir");
-	$self->shell("mkdir -p $pkgroot/php.d");
-
-}
-
-
-sub pkg_filename {
-	my $self = shift @_;
-	my $version = $self->config()->version() . '-' . $self->config()->release();
-	return "entropy-php.pkg";
-}
-
-sub mpkg_filename {
-	my $self = shift @_;
-	my $version = $self->config()->version() . '-' . $self->config()->release();
-	return "entropy-php.mpkg";
-}
-
-
-
-
-
-
-
-
 
 1;
