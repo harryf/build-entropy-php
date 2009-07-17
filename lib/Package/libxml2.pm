@@ -5,7 +5,7 @@ use warnings;
 
 use base qw(Package);
 
-our $VERSION = '2.7.3';
+our $VERSION = '2.6.32';
 
 
 sub dependency_names {
@@ -28,7 +28,6 @@ sub configure_flags {
 	my $self = shift @_;
 	my $prefix = $self->config()->prefix();
 	return $self->SUPER::configure_flags() . " --disable-dependency-tracking --without-python";
-#	return $self->SUPER::configure_flags() . " --without-python --with-iconv=$prefix";
 }
 
 
