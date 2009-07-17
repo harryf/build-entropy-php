@@ -26,14 +26,7 @@ sub packagename {
 
 
 sub dependency_names {
-	#iodbc
-	#t1lib
-	#frontbase 
-	#openbase
-	#tidy 
-	#ming
-	#mysql (replaced by mysqlnd)
-	return qw(iconv mssql memcache imapcclient libxml2 libxslt gettext curl libpng libjpeg libfreetype  postgresql mcrypt);
+	return qw(iconv mssql memcache imapcclient libxml2 libxslt gettext curl libpng tidy libjpeg libfreetype  postgresql mcrypt);
 }
 
 sub subpath_for_check {
@@ -54,8 +47,6 @@ sub configure_flags {
 	my $self = shift @_;
 	my %args = @_;
 	my $prefix = $self->config()->prefix();
-
-	# mime-magic not ported from old distribution because it is deprecated
 
 	my @extension_flags = (
 		"--with-config-file-scan-dir=$prefix/php.d",
@@ -86,20 +77,7 @@ sub configure_flags {
 		'--with-mysql=mysqlnd',
 		'--with-mysqli=mysqlnd',
 		'--with-pdo-mysql=mysqlnd',
-
-# 		'--enable-cgi',
 	);
-
-#		'--with-snmp=/usr', #32 bit only in leopard
-
-
-# 		"--enable-dbx",
-# 		"--enable-dbase",
-# 		"--with-bz2=/usr",
-# 		"--enable-fastcgi",
-# 		"--enable-cgi",
-
-
 
 	push @extension_flags, $self->dependency_extension_flags(%args);
 	
@@ -107,13 +85,6 @@ sub configure_flags {
 	return $self->SUPER::configure_flags() . " $apxs_option @extension_flags";
 	
 }
-
-#http://www.frontbase.com/download/Download_4.2.4/MacOSX-10.4u/FrontBase-MacOSX-4.2.4.dmg
-
-#         --with-fbsql=$(FRONTBASE_INSTDIR)/Library/FrontBase \
-#         --enable-openbase_module
-
-
 
 sub build_postconfigure {
 	my $self = shift @_;

@@ -12,7 +12,7 @@ diff -ru php-5.2.4/ext/standard/info.c php-5.2.4.entropy/ext/standard/info.c
 +#ifdef __x86_64__
 +#define ENTROPY_CH_THIS_ARCH "x86_64"
 +#endif
-+			php_printf("<h2 class=\"p\"><a style=\"text-decoration: none; background-color:inherit;\" href='http://www.entropy.ch/software/macosx/php/?phpinfo-version=%s-%d'>www.entropy.ch</a> Release %d</h2>\n", PHP_VERSION, ENTROPY_CH_RELEASE, ENTROPY_CH_RELEASE);
++			php_printf("<h2 class=\"p\"><a style=\"text-decoration: none; background-color:inherit;\" href='http://www.entropy.ch/software/macosx/php/?phpinfo-version=%s-%d'>www.entropy.ch</a> Release %d tweaked by <a href="http://gorn.ch">Tobias Ebnöther</a></h2>\n", PHP_VERSION, ENTROPY_CH_RELEASE, ENTROPY_CH_RELEASE);
 +			php_printf("<p>Universal Binary %s - this machine runs: %s</p>\n", ENTROPY_CH_ARCHS, ENTROPY_CH_THIS_ARCH);
  		} else {
  			php_info_print_table_row(2, "PHP Version", PHP_VERSION);
