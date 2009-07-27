@@ -5,9 +5,26 @@ use warnings;
 
 use base qw(Package);
 
-our $VERSION = '0.0';
+our $VERSION = '4aug00';
 
+sub packagename {
+	my $self = shift @_;
+	return "tidy" . $VERSION;
+}
 
+sub filename {
+	my ($self) = shift;
+	return $self->packagename() . ".tgz";
+}
+
+sub base_url {
+	return "http://switch.dl.sourceforge.net/sourceforge/tidy";
+}
+
+sub patchfiles {
+	my $self = shift @_;
+	return qw(ownership.patch);
+}
 
 sub php_extension_configure_flags {
 	my $self = shift @_;
@@ -16,6 +33,9 @@ sub php_extension_configure_flags {
 	return "--with-tidy=shared,/usr";
 }
 
+sub subpath_for_check {
+	return "lib/libtidy.dylib";
+}
 
 sub php_dso_extension_names {
 	my $self = shift @_;
@@ -28,7 +48,9 @@ sub package_filelist {
 	return qw(lib/php/extensions/no-debug-non-zts-20050922/tidy php.d/50-extension-tidy.ini);
 }
 
-
+sub build_configure {
+	return 1;
+}
 
 
 
@@ -57,9 +79,6 @@ sub filename {
 }
 
 
-sub subpath_for_check {
-	return "lib/libtidy.dylib";
-}
 
 
 
@@ -85,9 +104,6 @@ sub php_extension_configure_flags {
 	return "--with-tidy=shared," . $self->config()->prefix();
 
 }
-
-
-
 
 
 sub php_dso_extension_names {

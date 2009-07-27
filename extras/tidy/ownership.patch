@@ -1,0 +1,13 @@
+--- tidy/Makefile.orig	2009-07-27 15:25:31.000000000 +0200
++++ tidy/Makefile	2009-07-27 15:25:49.000000000 +0200
+@@ -39,9 +39,7 @@
+ 	cp -f tidy $(INSTALLDIR)bin
+ 	cp -f man_page.txt $(INSTALLDIR)man/man1/tidy.1
+ 	cd $(INSTALLDIR)bin; \
+-	chmod 755 tidy; \
+-	chgrp bin tidy; \
+-	chown bin tidy;
++	chmod 755 tidy;
+ 
+ 
+ 
