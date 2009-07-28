@@ -26,7 +26,7 @@ sub packagename {
 
 
 sub dependency_names {
-	return qw(iconv mssql memcache imapcclient libxml2 libxslt gettext curl libpng tidy libjpeg libfreetype  postgresql mcrypt);
+	return qw(iconv mssql memcache imapcclient libxml2 libxslt gettext curl libpng libjpeg libfreetype  postgresql mcrypt);
 }
 
 sub subpath_for_check {
@@ -77,6 +77,7 @@ sub configure_flags {
 		'--with-mysql=mysqlnd',
 		'--with-mysqli=mysqlnd',
 		'--with-pdo-mysql=mysqlnd',
+		'--with-tidy=/usr'
 	);
 
 	push @extension_flags, $self->dependency_extension_flags(%args);
@@ -194,7 +195,7 @@ sub cc {
 	# - the -L forces our custom iconv before the apple-supplied one
 	# - the -I makes sure the libxml2 version number for phpinfo() is picked up correctly,
 	#   i.e. ours and not the system-supplied libxml
-	return $self->SUPER::cc(@_) . " -L$prefix/lib -I$prefix/include -I$prefix/include/libxml2 -DENTROPY_CH_RELEASE=" . $self->config()->release();
+	return $self->SUPER::cc(@_) . " -L$prefix/lib -I" . $self->config()->basedir() . "/extras/tidy/leopard-tidy-include-override -I$prefix/include -I$prefix/include/libxml2 -DENTROPY_CH_RELEASE=" . $self->config()->release();
 }
 
 1;
