@@ -11,6 +11,7 @@ use Imports;
 use Package::php5;
 use Package::xdebug;
 use Package::uploadprogress;
+use Package::bytekit;
 
 my $basedir = qx(pwd);
 chomp $basedir;
@@ -49,6 +50,9 @@ $xdebug->install();
 
 my $upload = Package::uploadprogress->new(config => $config, variant => 'apache2');
 $upload->install();
+
+my $bytekit = Package::bytekit->new(config => $config, variant => 'apache2');
+$bytekit->install();
 
 
 # If there is a ~/.pear directory, "make install-pear" will not work properly
