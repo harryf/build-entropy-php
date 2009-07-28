@@ -10,6 +10,7 @@ use warnings;
 use Imports;
 use Package::php5;
 use Package::xdebug;
+use Package::uploadprogress;
 
 my $basedir = qx(pwd);
 chomp $basedir;
@@ -45,6 +46,9 @@ $php->install();
 
 my $xdebug = Package::xdebug->new(config => $config, variant => 'apache2');
 $xdebug->install();
+
+my $upload = Package::uploadprogress->new(config => $config, variant => 'apache2');
+$upload->install();
 
 
 # If there is a ~/.pear directory, "make install-pear" will not work properly
