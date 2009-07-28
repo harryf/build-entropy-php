@@ -1,4 +1,4 @@
 #!/bin/sh
 
-rm -rf /tmp/build-entropy-php-pkg/php5/ /tmp/build-entropy-php-pkgdst/entropy-php.pkg src/php-5.*/ /usr/local/php5/libphp5.so
+rm -rf /tmp/build-entropy-php-pkg/php5/ /tmp/build-entropy-php-pkgdst/entropy-php.pkg
 nice -n 19 perl5.10 -Ilib build-php.pl
