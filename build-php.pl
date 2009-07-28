@@ -9,6 +9,7 @@ use warnings;
 
 use Imports;
 use Package::php5;
+use Package::xdebug;
 
 my $basedir = qx(pwd);
 chomp $basedir;
@@ -41,6 +42,9 @@ my $config = Config->new(
 
 my $php = Package::php5->new(config => $config, variant => 'apache2');
 $php->install();
+
+my $xdebug = Package::xdebug->new(config => $config, variant => 'apache2');
+$xdebug->install();
 
 
 # If there is a ~/.pear directory, "make install-pear" will not work properly
