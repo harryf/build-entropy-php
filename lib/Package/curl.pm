@@ -5,29 +5,19 @@ use warnings;
 
 use base qw(Package);
 
-our $VERSION = '7.17.1';
-
-
-
-
+our $VERSION = '7.18.2';
 
 sub base_url {
 	return "http://curl.haxx.se/download";
 }
 
-
 sub packagename {
 	return "curl-" . $VERSION;
 }
 
-
-
 sub subpath_for_check {
 	return "lib/libcurl.dylib";
 }
-
-
-#CFLAGS='-arch i386 -arch x86_64' LDFLAGS='-arch i386 -arch x86_64' CC='cc -DENTROPY_CH_RELEASE=2' ./configure --disable-dependency-tracking --prefix=/usr/local/php5 --enable-ldaps
 
 sub configure_flags {
 	my $self = shift @_;
@@ -35,7 +25,7 @@ sub configure_flags {
 		$self->SUPER::configure_flags(@_),
 		'--enable-ldaps',
 		'--disable-dependency-tracking',
-		'--with-ssl'
+		'--with-ssl=/usr'
 	);
 }
 
@@ -45,21 +35,14 @@ sub php_extension_configure_flags {
 	return "--with-curl=shared," . $self->config()->prefix();
 }
 
-
 sub php_dso_extension_names {
 	my $self = shift @_;
 	return $self->shortname();
 }
 
-
-
-
 sub package_filelist {
 	my $self = shift @_;
 	return $self->php_dso_extension_paths(), qw(lib/libcurl*.dylib php.d/50-extension-curl.ini share/curl);
 }
-
-
-
 
 1;
