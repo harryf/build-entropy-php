@@ -21,7 +21,6 @@ sub new {
 	$self = bless {%args}, $class;
 	$self->{$_} ||= undef foreach qw(config);
 	$self->init(%args);
-	Hash::Util::lock_keys(%$self);
 	
 	return $self;
 

@@ -1,6 +1,5 @@
 package Imports;
 
-use Hash::Util;
 use Data::Dumper;
 use Package;
 use Config;
