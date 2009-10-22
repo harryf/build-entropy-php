@@ -3,61 +3,15 @@ package Package::memcache;
 use strict;
 use warnings;
 
-use base qw(Package);
+use base qw(Package::peclbase);
 
-our $VERSION = '2.2.2';
+our $VERSION = '3.0.4';
 
-
-
-sub base_url {
+sub init {
 	my $self = shift;
-	return "http://pecl.php.net/get";
+	$self->SUPER::init(@_);
+	$self->{PACKAGE_NAME} = 'memcache';
+	$self->{VERSION} = $VERSION;
 }
 
-
-sub packagename {
-	return "memcache-" . $VERSION;
-}
-
-
-sub filename {
-	my ($self) = shift;
-	return $self->packagename() . ".tgz";
-}
-
-
-
-sub is_unpacked {
-	return 1;
-}
-
-
-sub is_installed {
-	return 1;
-}
-
-
-sub php_build_pre {
-
-	my $self = shift @_;
-	my (%args) = @_;
-
-	$self->shell("rm -rf memcache");
-	my $tarball = $self->download_path();
-	$self->shell("tar -xzvf $tarball");
-	$self->shell("mv memcache-* memcache");
-
-}
-
-
-
-sub php_extension_configure_flags {
-
-	my $self = shift @_;
-	my (%args) = @_;
-
-	return "--enable-memcache";
-
-}
-
-1;
+return 1;
