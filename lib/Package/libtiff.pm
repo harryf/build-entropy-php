@@ -12,7 +12,7 @@ sub base_url {
 }
 
 sub packagename {
-	return "jpeg-$VERSION";
+	return "tiff-$VERSION";
 }
 
 sub filename {
@@ -27,7 +27,7 @@ sub dependency_names {
 
 sub is_built {
 	my $self = shift @_;
-	return -e $self->packagesrcdir() . "/libjpeg.a";
+	return -e $self->packagesrcdir() . "/libtiff.a";
 }
 
 sub subpath_for_check {
