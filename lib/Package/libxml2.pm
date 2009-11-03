@@ -42,6 +42,12 @@ sub php_extension_configure_flags {
 	return "--with-libxml-dir=shared," . $self->config()->prefix();
 }
 
+sub make_flags {
+	my $self = shift @_;
+	return "";
+}
+
+
 
 
 1;
