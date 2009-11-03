@@ -235,7 +235,7 @@ sub cc {
 	# http://gorn.ch/archive/2007/11/01/leopard-native-apache-with-custom-64bit-php.html
 	my $iconv_include_override_dir = $self->config()->basedir() . "/extras/iconv/leopard-iconv-include-override";
 	return "cc -I$iconv_include_override_dir";
-	return "cc";
+	# return "cc";
 }
 
 sub compiler_archflags {
