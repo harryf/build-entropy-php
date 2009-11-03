@@ -56,7 +56,11 @@ sub build {
 	foreach my $dir ($self->build_sourcedirs()) {
 		$self->cd($dir);
 		my $make_command = $self->make_command();
-		$self->shell('EXTRA_CFLAGS="-lresolv" ' . $make_command);
+		my $prefix = $self->config()->prefix();
+		
+		# found here: http://www.gen-x-design.com/archives/recompiling-php-5-3-on-snow-leopard-with-freetype-support/
+		# - the -lresolv forces to link agains libresolv
+		$self->shell('DYLD_LIBRARY_PATH=$prefix/lib" EXTRA_CFLAGS="-lresolv" ' . $make_command);
 	}
 
 }
@@ -72,7 +76,7 @@ sub build_configure {
 	my $cc = $self->cc();
 
 	my $prefix = $self->config()->prefix();
-	$self->shell(qq(MACOSX_DEPLOYMENT_TARGET=10.5 CFLAGS="$cflags" LDFLAGS='$ldflags' CXXFLAGS='$cxxflags' CC='$cc' ./configure ) . $self->configure_flags());
+	$self->shell(qq(MACOSX_DEPLOYMENT_TARGET=10.6 CFLAGS="$cflags" LDFLAGS='$ldflags' CXXFLAGS='$cxxflags' CC='$cc' ./configure ) . $self->configure_flags());
 
 }
 

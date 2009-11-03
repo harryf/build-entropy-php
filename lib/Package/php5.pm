@@ -26,7 +26,7 @@ sub packagename {
 
 
 sub dependency_names {
-	return qw(iconv mssql libxml2 libxslt imapcclient libmemcached gettext curl libpng libjpeg libfreetype  postgresql mcrypt);
+	return qw(iconv mssql libxml2 libxslt imapcclient libmemcached gettext curl libpng libjpeg libfreetype postgresql mcrypt);
 }
 
 sub subpath_for_check {
@@ -184,9 +184,17 @@ sub cflags {
 	my $self = shift @_;
 	my $supported_archs = join '/', $self->supported_archs();
 	my $prefix = $self->config()->prefix();
-	return $self->SUPER::cflags(@_) . qq( -DENTROPY_CH_ARCHS='\\"$supported_archs\\"' -DENTROPY_CH_RELEASE=) . $self->config()->release();
+	return $self->SUPER::cflags(@_) . qq( -no-cpp-precomp -DENTROPY_CH_ARCHS='\\"$supported_archs\\"' -DENTROPY_CH_RELEASE=) . $self->config()->release();
 #-I$prefix/include
 }
+
+sub ldflags {
+	my $self = shift @_;
+	my $prefix = $self->config()->prefix();
+	
+	return "-bind_at_load -L$prefix/lib " . $self->compiler_archflags();
+}
+
 
 sub cc {
 	my $self = shift @_;

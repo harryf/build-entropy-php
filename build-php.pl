@@ -25,7 +25,7 @@ check_ltdl();
 
 # putting cpus to 1 to disable parallel builds because it breaks libxml2 build
 my $config = Config->new(
-	cpus                 => 2,
+	cpus                 => 1,
 	basedir              => $basedir,
 	prefix               => '/usr/local/php5',
 	orahome              => "$basedir/install",
