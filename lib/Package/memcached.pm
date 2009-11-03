@@ -14,6 +14,10 @@ sub init {
 	$self->{VERSION} = $VERSION;
 }
 
+sub dependency_names {
+	return qw(libmemcached);
+}
+
 sub configure_flags {
 	my $self = shift @_;
 	return join " ", (
