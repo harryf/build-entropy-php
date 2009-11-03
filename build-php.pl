@@ -12,6 +12,7 @@ use Package::php5;
 use Package::xdebug;
 use Package::uploadprogress;
 use Package::memcached;
+use Package::memcache;
 use Package::xhprof;
 
 my $basedir = qx(pwd);
@@ -22,6 +23,7 @@ check_dotpear();
 check_arch();
 check_ltdl();
 
+# putting cpus to 1 to disable parallel builds because it breaks libxml2 build
 my $config = Config->new(
 	cpus                 => 2,
 	basedir              => $basedir,
@@ -54,6 +56,9 @@ $upload->install();
 
 my $memcached = Package::memcached->new(config => $config, variant => 'apache2');
 $memcached->install();
+
+my $memcache = Package::memcache->new(config => $config, variant => 'apache2');
+$memcache->install();
 
 my $xhprof = Package::xhprof->new(config => $config, variant => 'apache2');
 $xhprof->install();

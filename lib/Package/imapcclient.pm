@@ -11,6 +11,7 @@ our $VERSION = '2007e';
 
 
 
+
 sub base_url {
 	return "ftp://ftp.cac.washington.edu/imap";
 }
@@ -29,7 +30,7 @@ sub filename {
 sub make_command {
 	my $self = shift @_;
 	my $cflags = $self->cflags();
-	return qq(MACOSX_DEPLOYMENT_TARGET=10.5 EXTRACFLAGS="$cflags" make -e oxp);
+	return qq(MACOSX_DEPLOYMENT_TARGET=10.5 EXTRACFLAGS="$cflags" make -e osx);
 }
 
 
@@ -52,7 +53,7 @@ sub php_extension_configure_flags {
 	my $self = shift @_;
 	my (%args) = @_;
 	my $packagename = $self->packagename();
-	return "--with-imap=../$packagename --with-kerberos=/usr --with-imap-ssl=/usr";
+	return "--with-imap=../$packagename --with-kerberos=/usr";
 }
 
 

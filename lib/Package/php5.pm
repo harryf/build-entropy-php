@@ -26,7 +26,7 @@ sub packagename {
 
 
 sub dependency_names {
-	return qw(iconv mssql memcache imapcclient libxml2 libxslt gettext curl libpng libjpeg libfreetype  postgresql mcrypt);
+	return qw(iconv mssql libxml2 libxslt imapcclient libmemcached gettext curl libpng libjpeg libfreetype  postgresql mcrypt);
 }
 
 sub subpath_for_check {

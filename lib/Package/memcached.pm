@@ -14,4 +14,13 @@ sub init {
 	$self->{VERSION} = $VERSION;
 }
 
+sub configure_flags {
+	my $self = shift @_;
+	return join " ", (
+		$self->SUPER::configure_flags(@_),
+        '--with-libmemcached-dir=' . $self->config()->prefix()
+	);
+}
+
+
 return 1;

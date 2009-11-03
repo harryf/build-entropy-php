@@ -113,7 +113,7 @@ sub download {
 	$_->download() foreach $self->dependencies();
 	return if ($self->is_downloaded());
 	$self->log("downloading $self from " . $self->url());
-	$self->shell('/usr/bin/curl', '-o', $self->download_path(), $self->url());
+	$self->shell('/usr/bin/curl', '-L -o', $self->download_path(), $self->url());
 }
 
 sub unpack {
@@ -285,7 +285,7 @@ sub php_build_arch_pre {
 }
 
 sub all_archs {
-	return qw(i386 x86_64);
+	return qw(x86_64);
 }
 
 1;

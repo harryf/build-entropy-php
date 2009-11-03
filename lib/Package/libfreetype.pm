@@ -5,7 +5,7 @@ use warnings;
 
 use base qw(Package);
 
-our $VERSION = '2.3.9';
+our $VERSION = '2.3.11';
 
 
 

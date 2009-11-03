@@ -56,7 +56,7 @@ sub build {
 	foreach my $dir ($self->build_sourcedirs()) {
 		$self->cd($dir);
 		my $make_command = $self->make_command();
-		$self->shell($make_command);
+		$self->shell('EXTRA_CFLAGS="-lresolv" ' . $make_command);
 	}
 
 }
