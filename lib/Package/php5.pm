@@ -26,7 +26,7 @@ sub packagename {
 
 
 sub dependency_names {
-	return qw(iconv mssql libxml2 libxslt imapcclient libmemcached gettext curl libpng libjpeg libtiff libfreetype postgresql mcrypt);
+	return qw(iconv mssql libxml2 libxslt imapcclient libmemcached gettext curl libpng libjpeg libtiff libgif libfreetype postgresql mcrypt);
 }
 
 sub subpath_for_check {
@@ -48,7 +48,6 @@ sub configure_flags {
 	my %args = @_;
 	my $prefix = $self->config()->prefix();
 
-	# '--enable-exif',
 	my @extension_flags = (
 		"--with-config-file-scan-dir=$prefix/php.d",
 		'--with-openssl=/usr',
@@ -56,6 +55,7 @@ sub configure_flags {
 		'--with-zlib-dir=/usr',
 		'--with-gd',
 		'--with-ldap',
+		'--enable-exif',
 		'--with-xmlrpc',
 		'--enable-soap',
 		'--enable-sqlite-utf8',
@@ -192,8 +192,7 @@ sub ldflags {
 	my $self = shift @_;
 	my $prefix = $self->config()->prefix();
 	
-	#-bind_at_load 
-	return "-L$prefix/lib " . $self->compiler_archflags();
+	return "-bind_at_load -L$prefix/lib " . $self->compiler_archflags();
 }
 
 
