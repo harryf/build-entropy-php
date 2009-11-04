@@ -26,7 +26,7 @@ sub packagename {
 
 
 sub dependency_names {
-	return qw(iconv mssql libxml2 libxslt imapcclient gettext curl libtiff libpng libjpeg libfreetype postgresql mcrypt);
+	return qw(iconv mssql libxml2 libxslt imapcclient gettext curl libpng libjpeg libtiff libgif libfreetype postgresql mcrypt);
 }
 
 sub subpath_for_check {
@@ -55,6 +55,7 @@ sub configure_flags {
 		'--with-zlib-dir=/usr',
 		'--with-gd',
 		'--with-ldap',
+		'--enable-exif',
 		'--with-xmlrpc',
 	    '--enable-exif',
 		'--enable-soap',
@@ -188,6 +189,7 @@ sub cflags {
 #-I$prefix/include
 }
 
+<<<<<<< HEAD
 # sub ldflags {
 #   my $self = shift @_;
 #   my $prefix = $self->config()->prefix();
@@ -195,6 +197,14 @@ sub cflags {
 #   #-bind_at_load 
 #   return "-L$prefix/lib " . $self->compiler_archflags();
 # }
+=======
+sub ldflags {
+	my $self = shift @_;
+	my $prefix = $self->config()->prefix();
+	
+	return "-bind_at_load -L$prefix/lib " . $self->compiler_archflags();
+}
+>>>>>>> 13d47d86f9016ed1bdee94a2317f03e3315c9bbc
 
 
 sub cc {
