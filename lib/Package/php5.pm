@@ -173,6 +173,10 @@ sub create_dso_ini_files {
 	my $extdir = $self->config()->extdir();
 	$self->shell({silent => 0}, "echo 'extension=$_.so' > $prefix/php.d/50-extension-$_.ini") foreach (@dso_names);
 	$self->shell({silent => 0}, qq!echo 'extension_dir=$prefix/$extdir' > $prefix/php.d/10-extension_dir.ini!);
+	
+	# adding some default values
+	# TODO: fixme
+	$self->shell({silent => 0}, "echo 'mssql.charset = UTF-8' >> $prefix/php.d/50-extension-mssql.ini");
 }
 
 sub patchfiles {
