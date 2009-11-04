@@ -60,7 +60,7 @@ sub build {
 		
 		# found here: http://www.gen-x-design.com/archives/recompiling-php-5-3-on-snow-leopard-with-freetype-support/
 		# - the -lresolv forces to link agains libresolv
-		$self->shell('LDFLAGS="-L' . $prefix . '/lib" DYLD_LIBRARY_PATH="' . $prefix . '/lib" EXTRA_CFLAGS="-lresolv" ' . $make_command);
+		$self->shell(' EXTRA_CFLAGS="-lresolv" ' . $make_command);
 	}
 
 }
