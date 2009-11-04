@@ -55,6 +55,7 @@ sub configure_flags {
 		'--with-zlib-dir=/usr',
 		'--with-gd',
 		'--with-ldap',
+        # '--with-gmp', less important than iconv, so leaving it for later
 		'--enable-exif',
 		'--with-xmlrpc',
 	    '--enable-exif',
@@ -123,6 +124,7 @@ sub dependency_extension_flags {
 sub install {
 
 	my $self = shift @_;
+	return undef if ($self->is_installed());
 
 	$self->build();
 

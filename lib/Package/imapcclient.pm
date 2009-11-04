@@ -53,7 +53,7 @@ sub php_extension_configure_flags {
 	my $self = shift @_;
 	my (%args) = @_;
 	my $packagename = $self->packagename();
-	return "--with-imap=../$packagename --with-kerberos=/usr";
+	return "--with-imap=../$packagename --with-kerberos=/usr --with-imap-ssl=/usr";
 }
 
 

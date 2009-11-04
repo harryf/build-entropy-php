@@ -38,6 +38,7 @@ sub configure_flags {
 
 sub install {
 	my $self = shift @_;
+	return undef if ($self->is_installed());
 
 	$self->build();
 
@@ -49,7 +50,7 @@ sub install {
 }
 
 sub subpath_for_check {
-	return "lib/php/extensions/no-debug-non-zts-20090626/modules/xdebug.so";
+	return "lib/php/extensions/no-debug-non-zts-20090626/xdebug.so";
 }
 
 1;

@@ -26,5 +26,4 @@ sub configure_flags {
 	);
 }
 
-
 return 1;
