@@ -189,23 +189,13 @@ sub cflags {
 #-I$prefix/include
 }
 
-<<<<<<< HEAD
-# sub ldflags {
-#   my $self = shift @_;
-#   my $prefix = $self->config()->prefix();
-#   
-#   #-bind_at_load 
-#   return "-L$prefix/lib " . $self->compiler_archflags();
-# }
-=======
 sub ldflags {
-	my $self = shift @_;
-	my $prefix = $self->config()->prefix();
-	
-	return "-bind_at_load -L$prefix/lib " . $self->compiler_archflags();
+  my $self = shift @_;
+  my $prefix = $self->config()->prefix();
+  
+  #-bind_at_load 
+  return "-L$prefix/lib " . $self->compiler_archflags();
 }
->>>>>>> 13d47d86f9016ed1bdee94a2317f03e3315c9bbc
-
 
 sub cc {
 	my $self = shift @_;
