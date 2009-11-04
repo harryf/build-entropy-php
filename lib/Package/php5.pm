@@ -201,6 +201,21 @@ sub ldflags {
   return "-L$prefix/lib " . $self->compiler_archflags();
 }
 
+sub compiler_extraflags {
+	my $self = shift @_;
+	# used to add EXTRA_CFLAGS to configure
+	
+	# found here: http://www.gen-x-design.com/archives/recompiling-php-5-3-on-snow-leopard-with-freetype-support/
+	# - the -lresolv forces to link agains libresolv
+	return "-lresolv";
+}
+
+# add EXTRA_CFLAGS to make
+sub make_command {
+	my $self = shift @_;
+	return "EXTRA_CFLAGS='-lresolv' " . $self->SUPER::make_command(@_);
+}
+
 sub cc {
 	my $self = shift @_;
 	my $prefix = $self->config()->prefix();

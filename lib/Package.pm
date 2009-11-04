@@ -4,8 +4,6 @@ use strict;
 use warnings;
 use base qw(PackageBase);
 
-
-
 our $VERSION = '1.0';
 
 # superclass for simple packages which don't require splice build
@@ -26,8 +24,6 @@ sub install {
 	return 1;
 }
 
-
-
 sub make_install_sourcedirs {
 	my $self = shift @_;
 	return $self->build_sourcedirs();
@@ -37,8 +33,6 @@ sub build_sourcedirs {
 	my $self = shift @_;
 	return ($self->packagesrcdir());
 }
-
-
 
 sub build {
 	my $self = shift @_;
@@ -58,13 +52,9 @@ sub build {
 		my $make_command = $self->make_command();
 		my $prefix = $self->config()->prefix();
 		
-		# found here: http://www.gen-x-design.com/archives/recompiling-php-5-3-on-snow-leopard-with-freetype-support/
-		# - the -lresolv forces to link agains libresolv
-		$self->shell(' EXTRA_CFLAGS="-lresolv" ' . $make_command);
+		$self->shell(' ' . $make_command);
 	}
-
 }
-
 
 sub build_configure {
 	my $self = shift @_;
@@ -74,27 +64,21 @@ sub build_configure {
 	my $cxxflags = $self->compiler_archflags();
 	my $archflags = $self->compiler_archflags();
 	my $cc = $self->cc();
+	my $extraflags = $self->compiler_extraflags();
+	$extraflags = ($extraflags ne "") ? "EXTRA_CFLAGS='" . $extraflags ."'" : "";
 
 	my $prefix = $self->config()->prefix();
-	$self->shell(qq(MACOSX_DEPLOYMENT_TARGET=10.6 CFLAGS="$cflags" LDFLAGS='$ldflags' CXXFLAGS='$cxxflags' CC='$cc' ./configure ) . $self->configure_flags());
-
+	$self->shell(qq(MACOSX_DEPLOYMENT_TARGET=10.6 CFLAGS="$cflags" LDFLAGS='$ldflags' CXXFLAGS='$cxxflags' $extraflags CC='$cc' ./configure ) . $self->configure_flags());
 }
-
-
-
 
 sub build_preconfigure {
 	my $self = shift @_;
 	my (%args) = @_;
 }
 
-
 sub build_postconfigure {
 	my $self = shift @_;
 	my (%args) = @_;
 }
-
-
-
 
 1;

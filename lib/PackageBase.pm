@@ -243,6 +243,12 @@ sub compiler_archflags {
 	return join " ", map {"-arch $_"} $self->all_archs();
 }
 
+sub compiler_extraflags {
+	# used to add EXTRA_CFLAGS to configure
+	my $self = shift @_;
+	return "";
+}
+
 sub install_prefix {
 	my $self = shift @_;
 	return $self->config()->prefix();
