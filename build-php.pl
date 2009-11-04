@@ -55,9 +55,6 @@ $xdebug->install();
 my $upload = Package::uploadprogress->new(config => $config, variant => 'apache2');
 $upload->install();
 
-my $libmemcached = Package::libmemcached->new(config => $config, variant => 'apache2');
-$libmemcached->install();
-
 my $memcached = Package::memcached->new(config => $config, variant => 'apache2');
 $memcached->install();
 

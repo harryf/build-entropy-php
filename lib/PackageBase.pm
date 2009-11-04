@@ -79,15 +79,23 @@ sub install {
 	$self->log("installing");
 	
 	return 1;
-	
 }
 
 sub is_installed {
 	my $self = shift @_;
+	return undef unless ($self->are_dependencies_installed());
 	my $subpath = $self->subpath_for_check();
 	my $exists = -e $self->install_prefix() . "/$subpath";
 	$self->log("not installing because '$subpath' exists") if ($exists);
 	return $exists;
+}
+
+sub are_dependencies_installed {
+    my $self = shift @_;
+    foreach ($self->dependencies()) {
+        return undef unless ($_->is_installed());
+    }
+    return 1;
 }
 
 sub subpath_for_check {
