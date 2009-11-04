@@ -55,6 +55,7 @@ sub configure_flags {
 		'--with-zlib-dir=/usr',
 		'--with-gd',
 		'--with-ldap',
+        # '--with-gmp', less important than iconv, so leaving it for later
 		'--enable-exif',
 		'--with-xmlrpc',
 	    '--enable-exif',
