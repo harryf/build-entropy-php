@@ -125,6 +125,7 @@ sub dependency_extension_flags {
 sub install {
 
 	my $self = shift @_;
+	return undef if ($self->is_installed());
 
 	$self->build();
 
