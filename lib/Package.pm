@@ -64,11 +64,9 @@ sub build_configure {
 	my $cxxflags = $self->compiler_archflags();
 	my $archflags = $self->compiler_archflags();
 	my $cc = $self->cc();
-	my $extraflags = $self->compiler_extraflags();
-	$extraflags = ($extraflags ne "") ? "EXTRA_CFLAGS='" . $extraflags ."'" : "";
 
 	my $prefix = $self->config()->prefix();
-	$self->shell(qq(MACOSX_DEPLOYMENT_TARGET=10.6 CFLAGS="$cflags" LDFLAGS='$ldflags' CXXFLAGS='$cxxflags' $extraflags CC='$cc' ./configure ) . $self->configure_flags());
+	$self->shell(qq(MACOSX_DEPLOYMENT_TARGET=10.6 CFLAGS="$cflags" LDFLAGS='$ldflags' CXXFLAGS='$cxxflags' CC='$cc' ./configure ) . $self->configure_flags());
 }
 
 sub build_preconfigure {

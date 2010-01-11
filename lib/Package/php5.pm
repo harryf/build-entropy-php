@@ -105,8 +105,8 @@ sub build_preconfigure {
 	}
 
 	$self->cd_packagesrcdir();
-	$self->shell("aclocal");
-	$self->shell("./buildconf --force");
+    $self->shell("aclocal");
+    $self->shell("./buildconf --force");
 	$self->shell({fatal => 0}, "ranlib " . $self->install_prefix() . "/lib/*.a");
 	$self->shell({fatal => 0}, "ranlib " . $self->install_tmp_prefix() . "/lib/*.a");
 
@@ -200,21 +200,6 @@ sub ldflags {
   
   #-bind_at_load 
   return "-L$prefix/lib " . $self->compiler_archflags();
-}
-
-sub compiler_extraflags {
-	my $self = shift @_;
-	# used to add EXTRA_CFLAGS to configure
-	
-	# found here: http://www.gen-x-design.com/archives/recompiling-php-5-3-on-snow-leopard-with-freetype-support/
-	# - the -lresolv forces to link agains libresolv
-	return "-lresolv";
-}
-
-# add EXTRA_CFLAGS to make
-sub make_command {
-	my $self = shift @_;
-	return "EXTRA_CFLAGS='-lresolv' " . $self->SUPER::make_command(@_);
 }
 
 sub cc {
