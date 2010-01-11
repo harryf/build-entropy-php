@@ -24,7 +24,7 @@ sub subpath_for_check {
 
 sub configure_flags {
 	my $self = shift @_;
-	return $self->SUPER::configure_flags(@_) . " --disable-rpath --enable-msdblib --with-tdsver=8.0";
+	return $self->SUPER::configure_flags(@_) . " --disable-rpath --enable-msdblib --with-tdsver=8.0 --with-openssl";
 }
 
 sub build_postconfigure {
