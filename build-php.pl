@@ -15,6 +15,7 @@ use Package::libmemcached;
 use Package::memcached;
 use Package::memcache;
 use Package::xhprof;
+use Package::APC;
 
 my $basedir = qx(pwd);
 chomp $basedir;
@@ -41,7 +42,7 @@ my $config = Config->new(
 			suffix       => '-apache2',
 		},
 	},
-	version              => '5.3.0',
+	version              => '5.3.1',
 	release              => 3,
 	debug                => 1,
 );
@@ -64,6 +65,8 @@ $memcache->install();
 my $xhprof = Package::xhprof->new(config => $config, variant => 'apache2');
 $xhprof->install();
 
+my $APC = Package::APC->new(config => $config, variant => 'apache2');
+$APC->install();
 
 # If there is a ~/.pear directory, "make install-pear" will not work properly
 sub check_dotpear {
