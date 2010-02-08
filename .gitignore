@@ -3,3 +3,4 @@ download
 src
 create_package.sh
 .svn
+deploy
