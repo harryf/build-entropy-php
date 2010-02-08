@@ -16,6 +16,8 @@ use Package::memcached;
 use Package::memcache;
 use Package::xhprof;
 use Package::APC;
+use Package::solr;
+use Package::oauth;
 
 my $basedir = qx(pwd);
 chomp $basedir;
@@ -67,6 +69,12 @@ $xhprof->install();
 
 my $APC = Package::APC->new(config => $config, variant => 'apache2');
 $APC->install();
+
+my $solr = Package::solr->new(config => $config, variant => 'apache2');
+$solr->install();
+
+my $oauth = Package::oauth->new(config => $config, variant => 'apache2');
+$oauth->install();
 
 # If there is a ~/.pear directory, "make install-pear" will not work properly
 sub check_dotpear {
