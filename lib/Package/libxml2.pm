@@ -5,7 +5,7 @@ use warnings;
 
 use base qw(Package);
 
-our $VERSION = '2.7.5';
+our $VERSION = '2.7.6';
 
 
 sub dependency_names {
