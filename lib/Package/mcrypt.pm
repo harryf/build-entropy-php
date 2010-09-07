@@ -9,7 +9,7 @@ our $VERSION = '2.5.8';
 
 
 sub base_url {
-	return "http://dl.sourceforge.net/sourceforge/mcrypt";
+	return "http://downloads.sourceforge.net/project/mcrypt/Libmcrypt/$VERSION";
 }
 
 
