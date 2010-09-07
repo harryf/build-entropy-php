@@ -5,7 +5,7 @@ use warnings;
 
 use base qw(Package);
 
-our $VERSION = '0.34';
+our $VERSION = '0.38';
 
 sub base_url {
 	return "http://download.tangent.org/";
@@ -23,17 +23,19 @@ sub filename {
 
 sub is_built {
 	my $self = shift @_;
-	return -e $self->packagesrcdir() . "/libmemcached.a";
+	return -e $self->packagesrcdir() . "/libmemcached.4.dylib";
 }
 
 sub subpath_for_check {
 	my $self = shift @_;
-	return "lib/libmemcached.a";
+	return "lib/libmemcached.4.dylib";
 }
 
 sub configure_flags {
 	my $self = shift @_;
-	return $self->SUPER::configure_flags(@_) . " --disable-dependency-tracking";
+	# check if we do a debug build:
+	my $debugflag = $self->config()->debug() ? ' --with-debug' : '';
+	return $self->SUPER::configure_flags(@_) . " --disable-dependency-tracking $debugflag";
 }
 
 sub install {
