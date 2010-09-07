@@ -48,7 +48,7 @@ sub php_extension_configure_flags {
 	my (%args) = @_;
 	my $mysql_prefix = $self->config()->mysql_install_prefix();
 	die "mysql install prefix '$mysql_prefix' does not exist" unless (-d $mysql_prefix);
-	return "--with-mysql=shared,$mysql_prefix --with-mysqli=shared,$mysql_prefix/bin/mysql_config --with-pdo-mysql=shared,$mysql_prefix";
+	return "--with-mysql=shared,$mysql_prefix --with-mysqli=shared,$mysql_prefix/bin/mysql_config --with-pdo-mysql=shared,$mysql_prefix --with-mysql-sock=/tmp/mysql.sock";
 }
 
 
