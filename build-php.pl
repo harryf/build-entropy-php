@@ -18,6 +18,10 @@ use Package::xhprof;
 use Package::APC;
 use Package::solr;
 use Package::oauth;
+use Package::xslcache;
+# use Package::yaml;
+use Package::mongo;
+use Package::phpunit;
 
 my $basedir = qx(pwd);
 chomp $basedir;
@@ -44,7 +48,7 @@ my $config = Config->new(
 			suffix       => '-apache2',
 		},
 	},
-	version              => '5.3.1',
+	version              => '5.3.3',
 	release              => 3,
 	debug                => 1,
 );
@@ -75,6 +79,19 @@ $solr->install();
 
 my $oauth = Package::oauth->new(config => $config, variant => 'apache2');
 $oauth->install();
+
+my $xslcache = Package::xslcache->new(config => $config, variant => 'apache2');
+$xslcache->install();
+
+# Needs libYAML to be integrated as well, left for later
+# my $yaml = Package::yaml->new(config => $config, variant => 'apache2');
+# $yaml->install();
+
+my $mongo = Package::mongo->new(config => $config, variant => 'apache2');
+$mongo->install();
+
+my $phpunit = Package::phpunit->new(config => $config, variant => 'apache2');
+$phpunit->install();
 
 # If there is a ~/.pear directory, "make install-pear" will not work properly
 sub check_dotpear {
