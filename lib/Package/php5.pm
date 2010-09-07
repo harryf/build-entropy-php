@@ -78,7 +78,8 @@ sub configure_flags {
 		'--with-mhash',
 		'--with-mysql=mysqlnd',
 		'--with-mysqli=mysqlnd',
-		'--with-pdo-mysql=mysqlnd'
+		'--with-pdo-mysql=mysqlnd',
+		'--enable-pcntl'
 	);
 
 	push @extension_flags, $self->dependency_extension_flags(%args);
