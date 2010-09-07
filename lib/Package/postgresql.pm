@@ -5,24 +5,18 @@ use warnings;
 
 use base qw(Package);
 
-our $VERSION = '8.2.12';
+our $VERSION = '8.2.15';
 
 
 sub base_url {
-	return "ftp://ftp2.ch.postgresql.org/pub/mirrors/postgresql/source/v$VERSION/";
+    return "http://wwwmaster.postgresql.org/redir/376/h/source/v$VERSION/"
+    # return "ftp://ftp2.ch.postgresql.org/pub/mirrors/postgresql/source/v$VERSION/";
 }
 
 
 sub packagename {
 	return "postgresql-" . $VERSION;
 }
-
-
-sub build_sourcedirs {
-	my $self = shift @_;
-	return map {$self->packagesrcdir() . "/$_"} qw(src/interfaces src/include);
-}
-
 
 
 sub subpath_for_check {
