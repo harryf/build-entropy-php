@@ -225,9 +225,9 @@ sub extras_path {
 
 sub cflags {
 	my $self = shift @_;
-	my $debugflag = $self->config()->debug() ? '-g ' : '';
+	my $debugflag = $self->config()->debug() ? '-g -O' : '-Os';
 	my $prefix = $self->config()->prefix();
-	return "$debugflag -mmacosx-version-min=10.6 -O -I$prefix/include " . $self->compiler_archflags();
+	return "$debugflag -mmacosx-version-min=10.6 -I$prefix/include " . $self->compiler_archflags();
 }
 
 sub ldflags {
