@@ -24,7 +24,9 @@ sub subpath_for_check {
 
 sub configure_flags {
 	my $self = shift @_;
-	return $self->SUPER::configure_flags(@_) . " --disable-rpath --enable-msdblib --with-tdsver=8.0";
+	# check if we do a debug build:
+	my $debugflag = $self->config()->debug() ? ' --enable-debug' : '';
+	return $self->SUPER::configure_flags(@_) . " --disable-rpath --enable-msdblib --with-tdsver=8.0 $debugflag";
 }
 
 sub build_postconfigure {
