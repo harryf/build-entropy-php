@@ -8,7 +8,8 @@ use base qw(Package);
 our $VERSION = '4.1.6';
 
 sub base_url {
-	return "http://switch.dl.sourceforge.net/sourceforge/giflib/files/";
+    my $self = shift @_;
+    return "http://downloads.sourceforge.net/project/giflib/giflib%204.x/" . $self->packagename() . "/";
 }
 
 sub packagename {
