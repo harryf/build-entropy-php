@@ -32,7 +32,7 @@ sub configure_flags {
 sub php_extension_configure_flags {
 	my $self = shift @_;
 	my (%args) = @_;
-	return "--with-curl=shared," . $self->config()->prefix();
+	return "--with-curl=shared," . $self->config()->prefix() . " --with-curlwrappers";
 }
 
 sub php_dso_extension_names {
