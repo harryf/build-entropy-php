@@ -12,6 +12,7 @@ use Package::php5;
 use Package::xdebug;
 use Package::uploadprogress;
 use Package::libmemcached;
+use Package::intl;
 use Package::memcached;
 use Package::memcache;
 use Package::xhprof;
@@ -61,6 +62,9 @@ $xdebug->install();
 
 my $upload = Package::uploadprogress->new(config => $config, variant => 'apache2');
 $upload->install();
+
+my $intl = Package::intl->new(config => $config, variant => 'apache2');
+$intl->install();
 
 my $memcached = Package::memcached->new(config => $config, variant => 'apache2');
 $memcached->install();
