@@ -50,7 +50,7 @@ my $config = Config->new(
 		},
 	},
 	version              => '5.3.4',
-	release              => 4,
+	release              => 5,
 	debug                => 1,
 );
 
