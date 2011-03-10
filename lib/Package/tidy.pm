@@ -6,14 +6,10 @@ use warnings;
 use base qw(Package);
 
 our $VERSION = '';
+our $VERSION = '20110310';
 
 sub base_url {
-	return "tidy.cvs.sourceforge.net";
-}
-
-# cvs -z3 -d:pserver:anonymous@tidy.cvs.sourceforge.net:/cvsroot/tidy co -P tidy
-sub cvs_url {
-	return "pserver:anonymous\@tidy.cvs.sourceforge.net:/cvsroot/tidy";
+	return "http://php-osx.liip.ch/install/tidy";
 }
 
 sub packagename {
@@ -21,28 +17,16 @@ sub packagename {
 }
 
 sub filename {
-	return "tidy";
+	my ($self) = shift;
+	return $self->packagename() . "-" . $VERSION . ".tar.bz2";
 }
+
 
 sub subpath_for_check {
 	return "lib/libtidy.dylib";
 }
 
-sub download {
-	my $self = shift @_;
-	$_->download() foreach $self->dependencies();
-	return if ($self->is_downloaded());
-	$self->cd_srcdir();
-	my $url = $self->cvs_url();
-	$self->log("cvs checkout $self from " . $url);
-	$self->shell('/usr/bin/cvs', "-z3 -d:$url", 'co -P tidy');
-}
 
-sub extract {
-}
-
-sub patch {
-}
 
 sub package_filelist {
 	my $self = shift @_;
