@@ -25,8 +25,12 @@ sub configure_flags {
 		$self->SUPER::configure_flags(@_),
 		'--enable-ldaps',
 		'--disable-dependency-tracking',
-		'--with-ssl=/usr'
+		'--with-ssl=/usr',
+		'--with-libidn='.$self->config()->prefix()  
 	);
+}
+sub dependency_names {
+        return qw(idn);
 }
 
 sub php_extension_configure_flags {
