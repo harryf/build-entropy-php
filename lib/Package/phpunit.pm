@@ -19,15 +19,17 @@ sub base_url {
 
 sub install {
     my $self = shift @_;
-    # $self->SUPER::install(@_);
+	# $self->SUPER::install(@_);
     return undef if ($self->is_installed());
 
+	my $prefix = $self->config()->prefix();
+	
     my $src = $self->packagesrcdir();
     my $dst = $self->install_prefix() . '/bin';
-    $self->shell({fatal => 0, silent => 0},"/usr/local/php5/bin/pear channel-discover pear.phpunit.de");
-    $self->shell({fatal => 0, silent => 0},"/usr/local/php5/bin/pear channel-discover components.ez.no");
-    $self->shell({fatal => 0, silent => 0},"/usr/local/php5/bin/pear channel-discover pear.symfony-project.com");
-    $self->shell({fatal => 0,silent => 0},"/usr/local/php5/bin/pear install --force --alldeps phpunit/PHPUnit");
+    $self->shell({fatal => 0, silent => 0},"$prefix/bin/pear channel-discover pear.phpunit.de");
+    $self->shell({fatal => 0, silent => 0},"$prefix/bin/pear channel-discover components.ez.no");
+    $self->shell({fatal => 0, silent => 0},"$prefix/bin/pear channel-discover pear.symfony-project.com");
+    $self->shell({fatal => 0,silent => 0},"$prefix/bin/pear install --force --alldeps phpunit/PHPUnit");
     # create 2 binaries: phpunit and phpdb with sed
     # $self->shell({silent => 0}, "sed 's|\@php_bin\@|" . $dst . "\/php|' " . $src . "/phpunit.php >" . $dst . "/phpunit");
     # $self->shell({silent => 0}, "chmod 0755 " . $dst . "/phpunit");
