@@ -13,7 +13,7 @@ sub base_url {
 
 #svn co svn://svn.xdebug.org/svn/xdebug/xdebug/trunk xdebug
 sub svn_url {
-    return "svn://svn.xdebug.org/svn/xdebug/xdebug/trunk";
+    return "svn://svn.xdebug.org/svn/xdebug/xdebug/tags/XDEBUG_2_1_1";
 }
 
 sub packagename {
