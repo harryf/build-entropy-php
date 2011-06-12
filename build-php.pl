@@ -22,6 +22,7 @@ use Package::oauth;
 use Package::xslcache;
 # use Package::yaml;
 use Package::mongo;
+use Package::rrd;
 use Package::phpunit;
 
 my $basedir = qx(pwd);
@@ -93,6 +94,9 @@ $xslcache->install();
 
 my $mongo = Package::mongo->new(config => $config, variant => 'apache2');
 $mongo->install();
+
+my $rrd = Package::rrd->new(config => $config, variant => 'apache2');
+$rrd->install();
 
 my $phpunit = Package::phpunit->new(config => $config, variant => 'apache2');
 $phpunit->install();
